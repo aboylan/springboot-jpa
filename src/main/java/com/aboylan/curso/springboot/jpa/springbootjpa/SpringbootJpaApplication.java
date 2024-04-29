@@ -1,6 +1,7 @@
 package com.aboylan.curso.springboot.jpa.springbootjpa;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -22,10 +23,23 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		findOne();
+	}
 
+	public void findOne() {
+		// Person person = null;
+		// Optional<Person> optionalPerson = repository.findById(1L);
+		// if(optionalPerson.isPresent()) {
+		// 	person = optionalPerson.get();
+		// }
+		// System.out.println(person);
+		repository.findById(1L).ifPresent(System.out::println);
+	}
+
+	public void list() {
 		// List<Person> persons = (List<Person>) repository.findAll();
-		// List<Person> persons = (List<Person>)
-		// repository.buscarByProgrammingLanguage("Python", "Pepe");
+		// List<Person> persons = (List<Person>) repository.buscarByProgrammingLanguage("Python", "Pepe");
+
 		List<Person> persons = (List<Person>) repository.findByProgrammingLanguageAndName("Python", "Pepe");
 
 		persons.stream().forEach(person -> {
@@ -37,5 +51,4 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 			System.out.println(person[0] + " es experto en " + person[1]);
 		});
 	}
-
 }
