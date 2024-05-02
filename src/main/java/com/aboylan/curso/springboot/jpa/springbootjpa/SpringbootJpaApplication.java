@@ -23,7 +23,14 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		findOne();
+		create();
+	}
+
+	public void create() {
+		Person person = new Person(null, "Lalo", "Thor", "Python");
+		
+		Person personNew = repository.save(person);
+		System.out.println(personNew);
 	}
 
 	public void findOne() {
@@ -31,7 +38,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		// Optional<Person> optionalPerson = repository.findById(1L);
 		// // if(!optionalPerson.isEmpty()) {
 		// if(optionalPerson.isPresent()) {
-		// 	person = optionalPerson.get();
+		// person = optionalPerson.get();
 		// }
 		// System.out.println(person);
 		repository.findByNameContaining("hn").ifPresent(System.out::println);
@@ -39,7 +46,8 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 	public void list() {
 		// List<Person> persons = (List<Person>) repository.findAll();
-		// List<Person> persons = (List<Person>) repository.buscarByProgrammingLanguage("Python", "Pepe");
+		// List<Person> persons = (List<Person>)
+		// repository.buscarByProgrammingLanguage("Python", "Pepe");
 
 		List<Person> persons = (List<Person>) repository.findByProgrammingLanguageAndName("Python", "Pepe");
 
