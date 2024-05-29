@@ -3,11 +3,15 @@ package com.aboylan.curso.springboot.jpa.springbootjpa.repositories;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import com.aboylan.curso.springboot.jpa.springbootjpa.dto.PersonDto;
 import com.aboylan.curso.springboot.jpa.springbootjpa.entities.Person;
 import java.util.List;
 import java.util.Optional;
 
 public interface PersonRepository extends CrudRepository<Person, Long> {
+
+    @Query("select new com.aboylan.curso.springboot.jpa.springbootjpa.dto.PersonDto(p.name, p.lastname) from Person p")
+    List<PersonDto> findAllPersonDto();
 
     @Query("select new Person(p.name, p.lastname) from Person p")
     List<Person> findAllObjectPersonPersonalized();
