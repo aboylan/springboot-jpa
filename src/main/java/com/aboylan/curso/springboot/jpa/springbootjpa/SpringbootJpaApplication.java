@@ -26,7 +26,26 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		personalizedQueriesDistinct();
+		personalizedQueriesConcatUpperAndLowerCase();
+	}
+
+	@Transactional(readOnly = true)
+	public void personalizedQueriesConcatUpperAndLowerCase() {
+		System.out.println("================== Consultas nombres y apellidos de personas ==================");
+		List<String> names = repository.findAllFullNameConcat();
+		names.forEach(System.out::println);
+
+		System.out.println("================== Consultas nombres y apellidos mayuscula ==================");
+		names = repository.findAllFullNameConcatUpper();
+		names.forEach(System.out::println);
+
+		System.out.println("================== Consultas nombres y apellidos minuscula ==================");
+		names = repository.findAllFullNameConcatLower();
+		names.forEach(System.out::println);
+	
+		System.out.println("================== Consultas personalizada persona upper y lower case ==================");
+		List<Object[]> regs = repository.findAllPersonDataListCase();
+		regs.forEach(reg -> System.out.println("id=" + reg[0] + ", nombre=" + reg[1] + ", apellido=" + reg[2] + ", lenguaje=" + reg[3]));
 	}
 
 	@Transactional(readOnly = true)
@@ -43,14 +62,16 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		List<String> languages = repository.findAllProgrammingLanguageDistinct();
 		languages.forEach(System.out::println);
 
-		System.out.println("================== Consulta con total de lenguajes de programacion unicas ==================");
+		System.out.println(
+				"================== Consulta con total de lenguajes de programacion unicas ==================");
 		Long totalLanguage = repository.findAllProgrammingLanguageDistinctCount();
 		System.out.println("Total de lenguajes de programacion: " + totalLanguage);
 	}
 
 	@Transactional(readOnly = true)
 	public void personalizedQueries2() {
-		System.out.println("================== consulta por objeto persona y lenguaje de programacion ==================");
+		System.out.println(
+				"================== consulta por objeto persona y lenguaje de programacion ==================");
 		List<Object[]> personRegs = repository.findAllMixPerson();
 		personRegs.forEach(reg -> {
 			System.out.println("programmingLanguage=" + reg[1] + ", person=" + reg[0]);
@@ -91,12 +112,14 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		Optional<Object> optionalReg = repository.obtenerPersonDataById(id);
 		if (optionalReg.isPresent()) {
 			Object[] personReg = (Object[]) optionalReg.orElseThrow();
-			System.out.println("id=" + personReg[0] + ", nombre=" + personReg[1] + ", apellido=" + personReg[2] + ", lenguaje=" + personReg[3]);
+			System.out.println("id=" + personReg[0] + ", nombre=" + personReg[1] + ", apellido=" + personReg[2]
+					+ ", lenguaje=" + personReg[3]);
 		}
 
 		System.out.println("===== consulta por campos personalizados lista =====");
 		List<Object[]> regs = repository.obtenerPersonDataList();
-		regs.forEach(reg -> System.out.println("id=" + reg[0] + ", nombre=" + reg[1] + ", apellido=" + reg[2] + ", lenguaje=" + reg[3]));
+		regs.forEach(reg -> System.out
+				.println("id=" + reg[0] + ", nombre=" + reg[1] + ", apellido=" + reg[2] + ", lenguaje=" + reg[3]));
 	}
 
 	@Transactional
