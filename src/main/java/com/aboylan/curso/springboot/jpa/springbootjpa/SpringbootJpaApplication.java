@@ -26,7 +26,23 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		personalizedQueriesBetween();
+		queriesFunctionAggregation();
+	}
+
+	@Transactional(readOnly = true)
+	public void queriesFunctionAggregation() {
+
+		System.out.println("================== Consulta con el total de registros de la tabla persona ==================");
+		Long count = repository.totalPerson();
+		System.out.println(count);
+
+		System.out.println("================== Consulta con el valor minimo del id ==================");
+		Long min = repository.minId();
+		System.out.println(min);
+
+		System.out.println("================== Consulta con el valor maximo del id ==================");
+		Long max = repository.maxId();
+		System.out.println(max );
 	}
 
 	@Transactional(readOnly = true)
@@ -55,10 +71,11 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		System.out.println("================== Consultas nombres y apellidos minuscula ==================");
 		names = repository.findAllFullNameConcatLower();
 		names.forEach(System.out::println);
-	
+
 		System.out.println("================== Consultas personalizada persona upper y lower case ==================");
 		List<Object[]> regs = repository.findAllPersonDataListCase();
-		regs.forEach(reg -> System.out.println("id=" + reg[0] + ", nombre=" + reg[1] + ", apellido=" + reg[2] + ", lenguaje=" + reg[3]));
+		regs.forEach(reg -> System.out
+				.println("id=" + reg[0] + ", nombre=" + reg[1] + ", apellido=" + reg[2] + ", lenguaje=" + reg[3]));
 	}
 
 	@Transactional(readOnly = true)
