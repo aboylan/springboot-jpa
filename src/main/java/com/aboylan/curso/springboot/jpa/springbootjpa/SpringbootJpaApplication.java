@@ -27,7 +27,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		whereIn();
+		update();
 	}
 
 	@Transactional(readOnly = true)
@@ -235,7 +235,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 	public void update() {
 
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Ingrese el id a eliminar:");
+		System.out.println("Ingrese el id de la persona:");
 		Long id = scanner.nextLong();
 
 		Optional<Person> optionalPerson = repository.findById(id);
